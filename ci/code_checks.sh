@@ -275,6 +275,11 @@ if [[ -z "$CHECK" || "$CHECK" == "patterns" ]]; then
     invgrep -RI --exclude=\*.{svg,c,cpp,html,js} --exclude-dir=env "\s$" *
     RET=$(($RET + $?)) ; echo $MSG "DONE"
     unset INVGREP_APPEND
+
+    MSG='Check doc/source RST files which format pandas incorrectly'; echo $MSG
+    invgrep -R --include=*.rst -E '((\*|`)+)pandas\1|^(?!\.\.).*\bPandas\b' doc/source/
+    RET=$(($RET + $?)) ; echo $MSG "DONE"
+
 fi
 
 ### CODE ###
