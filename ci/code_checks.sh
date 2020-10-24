@@ -277,7 +277,7 @@ if [[ -z "$CHECK" || "$CHECK" == "patterns" ]]; then
     unset INVGREP_APPEND
 
     MSG='Check doc/source RST files which format pandas incorrectly'; echo $MSG
-    invgrep -R --include=*.rst -E '((\*|`)+)pandas\1|^(?!\.\.).*\bPandas\b' doc/source/
+    invgrep -R --include=*.rst -Poz '((\*|`)+)pandas\1|((((\.\. code-block:: ipython\s+)(\s +.*)+)|(\.\. .*)|(\*.*)|.*(`+).*\s+<http.*>\10(__)?|`.*`_+\s+~+|.*:ref:`.*`)(*SKIP)(?!)|\bPandas\b)' doc/source/ | sed 's/\x0/\n/g'
     RET=$(($RET + $?)) ; echo $MSG "DONE"
 
 fi
